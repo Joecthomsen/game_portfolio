@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import {signIn} from "next-auth/react" 
 
 const Login = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
-    //const bcrypt = require("bcrypt")
 
     const handleEmail = (event) => {
         setEmail(event.target.value)
@@ -19,7 +18,7 @@ const Login = () => {
         <form className="login-form">
             <input onChange={handleEmail} type="text" placeholder="Email"></input>
             <input onChange={handlePassword} type="password" placeholder="Password"></input>
-            <button>Login</button>
+            <button onClick={() => signIn(email, password)} >Login</button>
         </form>
     );
 }

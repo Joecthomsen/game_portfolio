@@ -5,13 +5,14 @@ import GameCard from '../components/GameCard'
 import NavBar from '../components/NavBar'
 import styles from '../styles/Home.module.css'
 import gamecardData from '../resources/gamecardData'
+import { useSession } from 'next-auth/react'
 
 export default function Home() {
 
   const gameCards = gamecardData.cards.map(card => {
     return (
-      <ul className={styles.cardlist} >
-        <li key={card.id}><GameCard image={card.image} title={card.title} description={card.description}/></li>
+      <ul key={card.id} className={styles.cardlist} >
+        <li><GameCard link={card.link} image={card.image} title={card.title} description={card.description}/></li>
       </ul>
     )
   })
