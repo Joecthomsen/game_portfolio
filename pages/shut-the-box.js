@@ -6,6 +6,7 @@ const ShutTheBox = () => {
 
     const [flippers, setFlippers] = useState([])
     const [dice, setDice] = useState([])
+    const [lock, setLock] = useState(false)
 
     useEffect( () => initFlippers, [])
 
@@ -35,15 +36,32 @@ const ShutTheBox = () => {
     }
 
     const handleFlipperClick = (event) => {
-        if(event.target.innerText == dice[0] ||
+        console.log("meh")
+
+        if((event.target.innerText == dice[0] ||
            event.target.innerText == dice[1] ||
-           event.target.innerText == dice[0] + dice[1])
+           event.target.innerText == dice[0] + dice[1]) &&
+           !lock)
         {
+            setLock(true)
             setFlippers(prevState => {
                 return prevState.map(flipper => {
                     return flipper.id == event.target.id && !flipper.locked ? {...flipper, flipped: !flipper.flipped} : flipper
                 })
             })
+        }
+        else if(lock){
+            setFlippers(prevState => {
+                return prevState.map(flipper => {
+                    if(flipper.id == event.target.id && flipper.flipped && !flipper.locked){
+                        setLock(false)
+                        return {...flipper, flipped: false}
+                    }
+                    return flipper
+                    //return flipper.id == event.target.id && flipper.flipped && !flipper.locked  ? {...flipper, flipped: false} : flipper
+                })
+            })
+            
         }
     }
 
