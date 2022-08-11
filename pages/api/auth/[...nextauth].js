@@ -48,16 +48,6 @@ export default NextAuth({
             }
             return session
         },
-        // signIn: (credentials) => {
-        //     if(credentials.username === "joecthomsen" && credentials.password === "test"){
-        //         return {
-        //             id: 2,
-        //             name: "Johannes",
-        //             email: "joecthomsen@gmail.com"
-        //         }   
-        //     }
-        //     return null
-        // }
     },
     secret: "test",
     jwt: {
