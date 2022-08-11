@@ -13,8 +13,10 @@ const ShutTheBox = () => {
         const arr = []
         for(let i = 0 ; i < 9 ; i++){
             arr.push({
+                id: i,
                 number: i + 1,
-                flipped: false
+                flipped: false,
+                locked: false
             })
         } 
         setFlippers(arr)
@@ -24,13 +26,32 @@ const ShutTheBox = () => {
         let dieOne = Math.floor(Math.random() * 6) + 1
         let dieTwo = Math.floor(Math.random() * 6) + 1
         let dice = [dieOne, dieTwo]
+        setFlippers(prevState => {
+            return prevState.map(flipper => {
+                return flipper.flipped ? {...flipper, locked: true} : flipper
+            })
+        })
         setDice(dice)
-        console.log(dice)
     }
+
+    const handleFlipperClick = (event) => {
+        if(event.target.innerText == dice[0] ||
+           event.target.innerText == dice[1] ||
+           event.target.innerText == dice[0] + dice[1])
+        {
+            setFlippers(prevState => {
+                return prevState.map(flipper => {
+                    return flipper.id == event.target.id && !flipper.locked ? {...flipper, flipped: !flipper.flipped} : flipper
+                })
+            })
+        }
+    }
+
+    //console.log(flippers)
 
     const flipperList = flippers.map((flipper, index) => {
         return(
-            <Flipper key={index} number={flipper.number} flipped={flipper.flipped}/>
+            <Flipper id={flipper.id} handleClick={handleFlipperClick} key={index} number={flipper.number} flipped={flipper.flipped}/>
         )
     })
 
@@ -56,9 +77,9 @@ const ShutTheBox = () => {
     else{
         return (
             <div className="shut-box">
-                <div className="dice-container">
-                    <Die number={1} />
-                    <Die number={2} />
+                <div className="dice-container" onClick={rollDice}>
+                    <Die number={dice[0]} />
+                    <Die number={dice[1]} />
                 </div>
                 <div className="flippers-container">
                     <div className="flippers">

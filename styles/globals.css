@@ -133,7 +133,7 @@ main p{
 .flippers-container{
   display: block;
   position: absolute;
-  bottom: 10%
+  bottom: 10%;
 }
  
 .flippers {
@@ -147,6 +147,11 @@ main p{
   padding: 0.1rem  2rem;
   border-radius: 16px;
   font-size: xx-large;
+  margin: 0rem 1rem;
+}
+
+.flipper:hover{
+  background-color: #c2ecff;
 }
 
 .shut-box{
