@@ -7,6 +7,7 @@ const ShutTheBox = () => {
     const [flippers, setFlippers] = useState([])
     const [dice, setDice] = useState([])
     const [lock, setLock] = useState(false)
+    const [lost, setLost] = useState(false)
 
     useEffect( () => initFlippers, [])
 
@@ -21,6 +22,10 @@ const ShutTheBox = () => {
             })
         } 
         setFlippers(arr)
+        if(lost){
+            rollDice()
+            setLost(false)
+        }
     }
 
     const rollDice = () => {
@@ -32,12 +37,13 @@ const ShutTheBox = () => {
                 return flipper.flipped ? {...flipper, locked: true} : flipper
             })
         })
+        console.log("from func " + dice)
         setDice(dice)
+        setLock(false)
+        checkForLoseCondition(dice)
     }
 
     const handleFlipperClick = (event) => {
-        console.log("meh")
-
         if((event.target.innerText == dice[0] ||
            event.target.innerText == dice[1] ||
            event.target.innerText == dice[0] + dice[1]) &&
@@ -58,14 +64,21 @@ const ShutTheBox = () => {
                         return {...flipper, flipped: false}
                     }
                     return flipper
-                    //return flipper.id == event.target.id && flipper.flipped && !flipper.locked  ? {...flipper, flipped: false} : flipper
                 })
             })
-            
         }
     }
 
-    //console.log(flippers)
+    const checkForLoseCondition = (theDice) => {
+       
+        setLost(true)
+        if(theDice.length == 0){return}
+        flippers.forEach(flipper => {
+            if(!flipper.flipped && (flipper.number === theDice[0] || flipper.number === theDice[1] || flipper.number === theDice[0] + theDice[1])){
+                setLost(false)
+            }
+        })
+    }
 
     const flipperList = flippers.map((flipper, index) => {
         return(
@@ -73,7 +86,28 @@ const ShutTheBox = () => {
         )
     })
 
-    if(flipperList.length === 0){
+    if(lost){
+        return(
+            <div className="shut-box">
+                <div className="lose-container">
+                    <h1>You lose!!</h1>
+                    <h2>Press dice to play again</h2>
+                </div>
+                
+                <div className="dice-container" onClick={initFlippers}>
+                    <Die number={dice[0]} />
+                    <Die number={dice[1]} />
+                </div>
+                <div className="flippers-container">
+                    <div className="flippers">
+                        {flipperList}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    else if(flipperList.length === 0){
         return(
             <div>
                 Loading...

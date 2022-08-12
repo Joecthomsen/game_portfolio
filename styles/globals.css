@@ -160,6 +160,23 @@ main p{
   flex-direction: column;
 }
 
+.lose-container{
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+}
+
+.lose-container > h1{
+  font-size: 4rem;
+  color: red;
+  margin-bottom: 0px;
+}
+
+.lose-container > {
+  font-size: 2rem;
+  margin-top: 0px;
+}
+
 .starte-game-button{
   margin-top: 15rem;
   margin-bottom: 1rem;
