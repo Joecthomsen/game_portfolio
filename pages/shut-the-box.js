@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Confetti from "../components/Confetti";
 import Die from "../components/shut-the-box/Die";
 import Flipper from "../components/shut-the-box/Flipper";
 
@@ -8,6 +9,7 @@ const ShutTheBox = () => {
     const [dice, setDice] = useState([])
     const [lock, setLock] = useState(false)
     const [lost, setLost] = useState(false)
+    const [won, setWon] = useState(false)
 
     useEffect( () => initFlippers, [])
 
@@ -55,6 +57,7 @@ const ShutTheBox = () => {
                     return flipper.id == event.target.id && !flipper.locked ? {...flipper, flipped: !flipper.flipped} : flipper
                 })
             })
+            checkForWinCondition()
         }
         else if(lock){
             setFlippers(prevState => {
@@ -70,12 +73,20 @@ const ShutTheBox = () => {
     }
 
     const checkForLoseCondition = (theDice) => {
-       
         setLost(true)
         if(theDice.length == 0){return}
         flippers.forEach(flipper => {
             if(!flipper.flipped && (flipper.number === theDice[0] || flipper.number === theDice[1] || flipper.number === theDice[0] + theDice[1])){
                 setLost(false)
+            }
+        })
+    }
+
+    const checkForWinCondition = () => {
+        setWon(true)
+        flippers.forEach(flipper => {
+            if(flipper.flipped == false){
+                setWon(false)
             }
         })
     }
@@ -95,6 +106,24 @@ const ShutTheBox = () => {
                 </div>
                 
                 <div className="dice-container" onClick={initFlippers}>
+                    <Die number={dice[0]} />
+                    <Die number={dice[1]} />
+                </div>
+                <div className="flippers-container">
+                    <div className="flippers">
+                        {flipperList}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    else if(won){
+        return (
+            <div className="shut-box">
+                <Confetti />
+                <h1>You won!</h1>
+                <div className="dice-container" onClick={rollDice}>
                     <Die number={dice[0]} />
                     <Die number={dice[1]} />
                 </div>
