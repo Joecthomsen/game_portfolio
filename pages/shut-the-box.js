@@ -9,11 +9,12 @@ const ShutTheBox = () => {
     const [dice, setDice] = useState([])
     const [lock, setLock] = useState(false)
     const [lost, setLost] = useState(false)
-    const [won, setWon] = useState(false)
+    const [won, setWon] = useState()
 
     useEffect( () => initFlippers, [])
 
     const initFlippers = () => {
+        setWon(false)
         const arr = []
         for(let i = 0 ; i < 9 ; i++){
             arr.push({
@@ -83,12 +84,15 @@ const ShutTheBox = () => {
     }
 
     const checkForWinCondition = () => {
-        setWon(true)
+        let counter = 0
         flippers.forEach(flipper => {
-            if(flipper.flipped == false){
-                setWon(false)
+            if(flipper.flipped == true){
+                counter += 1;
             }
         })
+        if(counter === 8){
+            setWon(true)
+        }
     }
 
     const flipperList = flippers.map((flipper, index) => {
@@ -123,7 +127,8 @@ const ShutTheBox = () => {
             <div className="shut-box">
                 <Confetti />
                 <h1>You won!</h1>
-                <div className="dice-container" onClick={rollDice}>
+                <h2>Press dice to play again</h2>
+                <div className="dice-container" onClick={initFlippers}>
                     <Die number={dice[0]} />
                     <Die number={dice[1]} />
                 </div>
