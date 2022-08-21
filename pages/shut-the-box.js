@@ -29,6 +29,11 @@ const ShutTheBox = () => {
             rollDice()
             setLost(false)
         }
+        if(won){
+            rollDice()
+            setWon(false)
+            setLost(false)
+        }
     }
 
     const rollDice = () => {

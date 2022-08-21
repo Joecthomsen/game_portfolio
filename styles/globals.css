@@ -144,7 +144,7 @@ main p{
 
 .flipper{
   border: #3ab7ec solid 2px;
-  padding: 0.1rem  2rem;
+  padding: 2.3rem  2rem;
   border-radius: 16px;
   font-size: xx-large;
   margin: 0rem 1rem;
@@ -152,6 +152,11 @@ main p{
 
 .flipper:hover{
   background-color: #c2ecff;
+  cursor: pointer;
+}
+
+.flipper > h1:hover{
+  cursor: pointer;
 }
 
 .shut-box{
@@ -212,4 +217,5 @@ main p{
   color: white;
   font-size: xx-large;
 }
+
 

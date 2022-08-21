@@ -6,9 +6,7 @@ const Flipper = (props) => {
     }
     return (
         <div id={props.id} onClick={props.handleClick} className="flipper" style={styles}>
-            <h1>
-                {props.number}
-            </h1>
+            {props.number}
         </div>
     );
 }

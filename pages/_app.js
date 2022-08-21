@@ -13,5 +13,4 @@ function MyApp({ Component, pageProps }) {
     </SessionProvider>
     )
 }
-
 export default MyApp
