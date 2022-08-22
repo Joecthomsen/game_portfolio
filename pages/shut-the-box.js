@@ -7,26 +7,15 @@ import Flipper from "../components/shut-the-box/Flipper";
 
 export const getStaticProps = () => {
 
-    //setWon(false)
-            const arr = []
-            for(let i = 0 ; i < 9 ; i++){
-                arr.push({
-                    id: i,
-                    number: i + 1,
-                    flipped: false,
-                    locked: false
-                })
-            } 
-            // setFlippers(arr)
-            // if(lost){
-            //     rollDice()
-            //     setLost(false)
-            // }
-            // if(won){
-            //     rollDice()
-            //     setWon(false)
-            //     setLost(false)
-            // }
+    const arr = []
+    for(let i = 0 ; i < 9 ; i++){
+        arr.push({
+            id: i,
+            number: i + 1,
+            flipped: false,
+            locked: false
+        })
+    } 
 
     return{
         props: {
@@ -37,8 +26,11 @@ export const getStaticProps = () => {
 
 const ShutTheBox = ({flippers}) => {
 
-    // const [flippers, setFlippers] = useState([])
-    // const [dice, setDice] = useState([])
+    const [flippersf, setFlippers] = useState([])
+    const [dice, setDice] = useState([])
+
+    setFlippers(flippers)
+
     // const [lock, setLock] = useState(false)
     // const [lost, setLost] = useState(false)
     // const [won, setWon] = useState(false)
@@ -108,23 +100,55 @@ const ShutTheBox = ({flippers}) => {
     //     }
     // }
 
+
+        const rollDice = () => {
+            let dieOne = Math.floor(Math.random() * 6) + 1
+            let dieTwo = Math.floor(Math.random() * 6) + 1
+            let dice = [dieOne, dieTwo]
+            setFlippers(prevState => {
+                return prevState.map(flipper => {
+                    return flipper.flipped ? {...flipper, locked: true} : flipper
+                })
+            })
+            setDice(dice)
+            // setLock(false)
+            // checkForLoseCondition(dice)
+        }
+
+
     const flipperList = flippers.map((flipper, index) => {
         return(
             <Flipper id={flipper.id} key={index} number={flipper.number} flipped={flipper.flipped}/>
         )
     })
 
-    return(
-        <div className="shut-box">
-            <button className="starte-game-button">Start new game</button>
-            <div className="flippers-container">
-                <div className="flippers">
-                    {flipperList}
+    if(dice.length === 0){
+        return(
+            <div className="shut-box">
+                <button className="starte-game-button" onClick={rollDice}>Start new game</button>
+                <div className="flippers-container">
+                    <div className="flippers">
+                        {flipperList}
+                    </div>
                 </div>
             </div>
-        </div>
-    )
-
+        )
+    }
+    else {
+        return (
+            <div className="shut-box">
+                <div className="dice-container" onClick={rollDice}>
+                    <Die number={dice[0]} />
+                    <Die number={dice[1]} />
+                </div>
+                <div className="flippers-container">
+                    <div className="flippers">
+                        {flipperList}
+                    </div>
+                </div>
+            </div>
+        )
+    }
     // if(lost){
     //     return(
     //         <div className="shut-box">
