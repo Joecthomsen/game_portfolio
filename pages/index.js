@@ -9,6 +9,8 @@ import { useSession } from 'next-auth/react'
 
 export default function Home() {
 
+  console.log("This is from index.js")
+
   const gameCards = gamecardData.cards.map(card => {
     return (
       <ul key={card.id} className={styles.cardlist} >
