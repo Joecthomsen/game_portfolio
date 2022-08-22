@@ -13,4 +13,6 @@ function MyApp({ Component, pageProps }) {
     </SessionProvider>
     )
 }
+
+MyApp.displayName = 'The game app'
 export default MyApp
