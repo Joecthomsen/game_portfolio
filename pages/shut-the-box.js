@@ -14,6 +14,7 @@ const ShutTheBox = () => {
     useEffect( () => initFlippers, [])
 
     const initFlippers = () => {
+        console.log("This is from init flippers!")
         setWon(false)
         const arr = []
         for(let i = 0 ; i < 9 ; i++){
